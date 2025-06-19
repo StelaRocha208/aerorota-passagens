@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Confirmação de Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+        <h1 class="text-center text-primary">Confirmação de Compra</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Detalhes da Reserva</h5>
+                <p><strong>Passageiro:</strong> {{ reserva[1] }}</p>
+                <p><strong>Origem:</strong> {{ reserva[3] }}</p>
+                <p><strong>Destino:</strong> {{ reserva[4] }}</p>
+                <p><strong>Poltrona:</strong> {{ reserva[2] }}</p>
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <a href="{{ url_for('finalizar_compra', reserva_id=reserva[0]) }}" class="btn btn-primary">Confirmar Compra</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

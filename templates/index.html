@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AeroRota</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+    <nav class="navbar navbar-dark bg-primary rounded p-3 mb-4">
+        <h1 class="text-center text-white w-100">AeroRota - Sua Viagem Começa Aqui</h1>
+    </nav>
+
+    <h3 class="text-primary">Viagens Disponíveis</h3>
+    <table class="table table-hover table-bordered">
+        <tr class="table-dark text-white">
+            <th>ID</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Data</th>
+        </tr>
+        {% for viagem in viagens %}
+        <tr>
+            <td>{{ viagem[0] }}</td>
+            <td>{{ viagem[1] }}</td>
+            <td>{{ viagem[2] }}</td>
+            <td>{{ viagem[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 class="text-primary">Poltronas Disponíveis</h3>
+    <table class="table table-hover table-bordered">
+        <tr class="table-dark text-white">
+            <th>ID</th>
+            <th>Número</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        {% for poltrona in poltronas %}
+        <tr>
+            <td>{{ poltrona[0] }}</td>
+            <td>{{ poltrona[1] }}</td>
+            <td>{{ poltrona[2] }}</td>
+            <td>{{ poltrona[3] }}</td>
+            <td>
+                <span class="badge {% if poltrona[4] == 'disponível' %}bg-success
+                                   {% elif poltrona[4] == 'reservado' %}bg-warning text-dark
+                                   {% elif poltrona[4] == 'finalizado' %}bg-primary
+                                   {% elif poltrona[4] == 'cancelado' %}bg-danger
+                                   {% endif %}">
+                    {{ poltrona[4] }}
+                </span>
+            </td>
+            <td>
+                {% if poltrona[4] == 'disponível' %}
+                    <form method="POST" action="{{ url_for('reservar_poltrona') }}">
+                        <input type="hidden" name="poltrona_id" value="{{ poltrona[0] }}">
+                        <button type="submit" class="btn btn-success btn-sm">Reservar</button>
+                    </form>
+                {% elif poltrona[4] == 'reservado' %}
+                    <a href="{{ url_for('confirmar_finalizacao', reserva_id=poltrona[5]) }}" class="btn btn-primary btn-sm">Finalizar</a>
+                    <a href="{{ url_for('cancelar_reserva', reserva_id=poltrona[5]) }}" class="btn btn-danger btn-sm">Cancelar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
